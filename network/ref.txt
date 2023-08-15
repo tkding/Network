@@ -1,0 +1,38 @@
+from views.py: 
+
+# TODO copied and pasted 
+# understand this and make necessary changes
+@login_required
+def profile_content(request, user_id):
+    profile_user = get_object_or_404(User, id=user_id)
+    user_profile, created = UserProfile.objects.get_or_create(user=profile_user)
+    followers_count = user_profile.followers.count()
+    following_count = user_profile.user.following.count()
+    posts = Post.objects.filter(user=profile_user).order_by('-timestamp')
+
+    if request.user != profile_user:
+        is_following = request.user in user_profile.followers.all()
+    else:
+        is_following = None
+
+    # Convert the posts queryset to a list of dictionaries
+    posts_data = [
+        {
+            "user": {"username": post.user.username},
+            "content": post.content,
+            "timestamp": post.timestamp,
+            "likes_count": post.likes.count(),
+        }
+        for post in posts
+    ]
+
+    context = {
+        'profile_user': profile_user,
+        'followers_count': followers_count,
+        'following_count': following_count,
+        'is_following': is_following,
+        'posts': posts_data,  # Convert posts queryset to list of dictionaries
+    }
+
+    return JsonResponse(context)
+

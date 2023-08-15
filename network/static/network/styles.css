@@ -1,0 +1,70 @@
+.like-btn{
+    background-color: gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.like-btn.liked {
+    background-color: red;
+}
+
+.title{
+    font-size: 50px;
+    font-weight: bold;
+
+}
+
+.post{
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.success-message {
+    background-color: #4CAF50; /* Green background color */
+    color: white; /* White text color */
+    padding: 10px; /* Add some padding for spacing */
+    margin-bottom: 15px; /* Add some margin to separate from other elements */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.error-message {
+    background-color: #f44336; /* Red background color */
+    color: white; /* White text color */
+    padding: 10px; /* Add some padding for spacing */
+    margin-bottom: 15px; /* Add some margin to separate from other elements */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.new-post-form {
+    margin-bottom: 20px;
+}
+
+.resizable-textarea {
+    resize: vertical; /* Allow vertical resizing */
+    height: 200px; /* Initial height */
+    max-height: 50vh; /* Maximum height: 50% of the viewport height */
+    width: 100%; /* Occupy full width of the container */
+}
+
+/* Style for followers and following count */
+#followersCount,
+#followingCount {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#followersNumber,
+#followingNumber {
+    font-weight: bold;
+    color: #337ab7; /* Blue color for links */
+}
+
+
+

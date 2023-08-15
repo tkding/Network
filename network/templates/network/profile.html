@@ -1,0 +1,68 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h1 id="profileTitle"  data-is-logged-in="request.user.is_authenticated" data-is-current-user="{% if request.user == profile_user %}True{% else %}False{% endif %}">{{ profile_user.username }}'s Profile</h1>
+    <p id="followersCount">Followers: <span id="followersNumber">{{ followers_count }}</span></p>
+    <p id="followingCount">Following: <span id="followingNumber">{{ following_count }}</span></p>
+    
+    
+    {% if request.user.is_authenticated and request.user != profile_user %}
+        {% if is_following %}
+            <button id="followButton" class="btn btn-primary" style="display: none;">Follow</button>
+            <button id="unfollowButton" class="btn btn-primary">Unfollow</button>
+        {% else %}
+            <button id="followButton" class="btn btn-primary">Follow</button>
+            <button id="unfollowButton" class="btn btn-primary" style="display: none;">Unfollow</button>
+        {% endif %}
+    {% endif %}
+
+    <ul id="postsList">
+        <!-- posts will be added dynamically here -->
+        {% for post in posts %}
+            <li class="post">
+                <a href="{% url 'profile' user_id=post.user.id %}"><strong>{{ post.user.username }}</strong></a>
+                <p class="post-content" data-post-id="{{ post.id }}">{{ post.content }}</p>
+                <p>{{ post.timestamp }}</p>
+                <p>Likes: <span class="like-count" data-post-id="{{ post.id }}">{{ post.likes.count }}</span></p>
+                {% if user.is_authenticated %}
+                    <button class="like-btn {% if post.like_by_user %}liked{% endif %}" data-post-id="{{ post.id }}">Like</button>
+                {% endif %}
+                
+
+                {% if post.user == request.user %}
+                    <button class="edit-post-btn" data-post-id="{{ post.id }}">Edit</button>
+                    <div class="edit-post-form" hidden data-post-id="{{ post.id }}" data-original-content="{{ post.content }}">
+                        <textarea class="edit-post-textarea" name="content" cols="30" rows="5"></textarea>
+                        <button class="save-post-btn" data-post-id="{{ post.id }}">Save</button>
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination links -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ posts.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </span>
+
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">Next</a>
+                <a href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!-- project 4\project4\network\static\network\profile.js -->
+    <input type="hidden" id="profileUserId" value="{{ profile_user.id }}">
+    <script src="{% static 'network/profile.js' %}"></script>
+{% endblock %}
