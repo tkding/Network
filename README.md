@@ -28,7 +28,7 @@ This project involves building a social network web application using Django, Py
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/social-network.git
+   git clone [https://github.com/your-username/social-network.git] (https://github.com/tkding/Network.git)
    cd social-network
    ```
 
